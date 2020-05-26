@@ -48,14 +48,14 @@ func main() {
 
 	inputAsync := make(chan string, cores)
 
-	for i := 0; i < cores; i++ {
+	for i := 1; i <= cores; i++ {
 		waitGrp.Add(1)
-		go func() {
+		go func(i2 int) {
 			defer waitGrp.Done()
 			for url := range inputAsync {
-				get_resp_time(url, i)
+				get_resp_time(url, i2)
 			}
-		}()
+		}(i)
 	}
 
 	for _, url := range urls {
